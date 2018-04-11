@@ -1,5 +1,4 @@
-#!/usr/local/env python3.4
-
+#!/usr/local/env python3.6
 import time
 import paramiko
 import getpass
@@ -29,7 +28,7 @@ class sshClient(object):
         while True:
             command = input(hostname + "#")
             if command.lower() == "exit":
-                exitClient(device=net_device)
+                exit_client(device=net_device)
             elif command.lower().startswith("con"):
                 output = net_device.send_config_set(command,
                                     exit_config_mode=False)
@@ -55,12 +54,13 @@ class sshClient(object):
                                 print(output)
                     else:
                         output = net_device.send_config_set(command)
+                        print(output)
             else:
                 output = net_device.send_config_set(command)
                 print(output)
                 continue
 
-def returnFunction(self, device, save_changes):
+def return_function(device, save_changes):
     if save_changes:
         message = "[Config changes saved]"
     else:
@@ -71,14 +71,14 @@ def returnFunction(self, device, save_changes):
     time.sleep(3)
     addressSearch()
 
-def exitClient(self, device):
+def exit_client(device):
     while True:
         save_changes = input("Save any config changes? (y/n)>>> ")
         if save_changes.lower() == "y":
             output = device.send_command("copy run start")
             print(output)
-            returnFunction(device, save_changes=True)
+            return_function(device, save_changes=True)
             break
         else:
-            returnFunction(device, save_changes=False)
+            return_function(device, save_changes=False)
             break
